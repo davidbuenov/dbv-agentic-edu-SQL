@@ -1,0 +1,7 @@
+oracledb
+aisuite[google,openai,anthropic]
+python-dotenv
+pandas
+tabulate
+google-generativeai
+ipywidgets

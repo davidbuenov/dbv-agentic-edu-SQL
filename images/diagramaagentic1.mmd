@@ -1,0 +1,19 @@
+﻿%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "primaryColor": "#ffffff", "primaryTextColor": "#000000"}}}%%
+flowchart TD
+    A[🧑 Usuario] -->|Pregunta en lenguaje natural| B[🤖 Agente 1: Generador de SQL]
+    B -->|Genera consulta SQL| C[(🗄️ Oracle DB)]
+    C -->|Ejecuta SQL| D[📊 Resultado tabular]
+    D -->|Convierte a texto| E[🤖 Agente 2: Intérprete de resultados]
+    E -->|Explicación en lenguaje natural| F[🧑 Usuario]
+
+    subgraph Agentic Flow
+        B
+        E
+    end
+
+    style A fill:#f9f,stroke:#333,stroke-width:1px
+    style B fill:#bbf,stroke:#333,stroke-width:1px
+    style C fill:#ffd,stroke:#333,stroke-width:1px
+    style D fill:#dfd,stroke:#333,stroke-width:1px
+    style E fill:#bbf,stroke:#333,stroke-width:1px
+    style F fill:#f9f,stroke:#333,stroke-width:1px
