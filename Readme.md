@@ -11,6 +11,10 @@ El objetivo principal es que los estudiantes de informática aprendan a:
 - Ejecutar las consultas de forma segura y obtener los resultados.
 - Comprender las diferencias entre usar una librería nativa y un framework de abstracción multi-proveedor.
 
+![Diagrama del Sistema Agéntico](images/diagramaagentic1-notrans.png)
+
+Este diagrama muestra el flujo completo del sistema de agentes que conecta la inteligencia artificial con la Base de Datos Oracle  para procesar consultas en lenguaje natural.
+
 ## 🚀 Dos Versiones para un Mismo Objetivo
 
 Para facilitar el aprendizaje y mostrar diferentes arquitecturas de software, el proyecto se presenta en dos cuadernos de Jupyter distintos:
