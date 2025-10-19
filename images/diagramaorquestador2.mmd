@@ -1,0 +1,28 @@
+%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "primaryColor": "#ffffff", "primaryTextColor": "#000000"}}}%%
+flowchart TD
+    A[🎬 Inicio] --> B[🧠 Agente Contextualización]
+
+    B -->|"✅ avanzar<br/>(Query Lista)"| C[🔧 Agente Generación SQL]
+    B -->|"🔄 repetir<br/>(Necesita Clarificación)"| B
+
+    C -->|"▶️ ejecutar<br/>(SQL Generado)"| D[⚡ Agente Ejecución DB]
+
+    D -->|"✅ correcto<br/>(Datos OK)"| E[🎯 Agente Interpretación]
+    D -->|"❌ error<br/>(Fallo SQL)"| C
+    D -->|"⚠️ sin_resultados<br/>(Lógica Vacía)"| B
+    
+    E --> F[🏁 Fin]
+    
+    subgraph Orquestación Multi-Agente - LangGraph
+        B
+        C
+        D
+        E
+    end
+    
+    style A fill:#f9f,stroke:#333,stroke-width:1px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#bbf,stroke:#333,stroke-width:1px
+    style D fill:#ffd,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:1px
+    style F fill:#dfd,stroke:#333,stroke-width:1px

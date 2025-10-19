@@ -1,6 +1,6 @@
 # 🧠 DBV-AgenticEduSQL
 
-Este proyecto es una práctica educativa diseñada para enseñar cómo integrar modelos de lenguaje generativo (LLMs) con bases de datos Oracle. A través de dos enfoques distintos, los estudiantes aprenderán a generar y ejecutar consultas SQL a partir de lenguaje natural.
+Este proyecto es una práctica educativa diseñada para enseñar cómo integrar modelos de lenguaje generativo (LLMs) con bases de datos Oracle. A través de **tres niveles progresivos**, los estudiantes aprenderán desde lo básico hasta arquitecturas profesionales de orquestación multi-agente para generar y ejecutar consultas SQL a partir de lenguaje natural.
 
 ## 🎯 Objetivo
 
@@ -15,43 +15,96 @@ El objetivo principal es que los estudiantes de informática aprendan a:
 
 Este diagrama muestra el flujo completo del sistema de agentes que conecta la inteligencia artificial con la Base de Datos Oracle  para procesar consultas en lenguaje natural.
 
-## 🚀 Dos Versiones para un Mismo Objetivo
+## 🚀 Tres Niveles de Aprendizaje Progresivo
 
-Para facilitar el aprendizaje y mostrar diferentes arquitecturas de software, el proyecto se presenta en dos cuadernos de Jupyter distintos:
+El proyecto se presenta en **tres notebooks** que van desde lo básico hasta arquitecturas profesionales de orquestación multi-agente:
 
-### 1. `oracle_agentic_gemini_hello_world.ipynb` (Enfoque Directo y Simple)
+### 📘 Nivel 1: `oracle_agentic_gemini_apikey.ipynb` (Fundamentos - Enfoque Simple)
 
-Esta versión utiliza la librería oficial de Google (`google-generativeai`) y se autentica con una **API Key de Gemini**. 
+**Tu primer paso en IA + Bases de Datos**
 
-- **Ventaja Principal**: Es la forma más rápida y sencilla de empezar. Solo necesitas una API Key, lo que permite centrarse en la lógica de la aplicación sin configuraciones complejas.
-- **Ideal para**: Proyectos de aprendizaje o prototipos que dependen de un único proveedor de IA.
+Esta versión utiliza la librería oficial de Google (`google-generativeai`) con **API Key** para máxima simplicidad.
 
-### 2. `oracle_agentic_hello_world.ipynb` (Enfoque Flexible y Multi-Proveedor)
+- **Ventaja Principal**: Ideal para **empezar**. Solo necesitas una API Key. Perfecta para entender el flujo básico: pregunta → SQL → resultado.
+- **Arquitectura**: Lineal y directa (2 agentes secuenciales)
+- **Ideal para**: Primeros contactos con IA generativa y SQL
 
-Esta versión utiliza la librería `AISuite`, un framework de abstracción que permite cambiar fácilmente entre diferentes proveedores de IA **(OpenAI, Google, Anthropic, etc.)** con solo cambiar una línea de configuración.
+---
 
-- **Ventaja Principal**: Su **flexibilidad**. Permite experimentar y comparar el rendimiento de distintos modelos (ej. `openai:gpt-4o`, `google:gemini-pro`, `anthropic:claude-3-sonnet`) sin reescribir el código. Es una arquitectura más robusta y adaptable.
-- **Ideal para**: Proyectos que pueden necesitar cambiar de proveedor de IA en el futuro o que buscan encontrar el mejor modelo para una tarea específica.
+### 📗 Nivel 2: `oracle_agentic_hello_world.ipynb` (Intermedio - Multi-Proveedor)
 
-## 🤔 ¿Qué enfoque elegir? Librería Nativa vs. Framework de Abstracción
+**Flexibilidad y comparación de modelos**
 
-La elección depende de tus objetivos. Para esta práctica, puedes empezar por el que prefieras, pero es útil entender sus diferencias conceptuales.
+Esta versión utiliza **AISuite**, un framework que abstrae múltiples proveedores de IA (OpenAI, Google, Anthropic).
 
-| Característica | Enfoque Directo (Librería Nativa) | Enfoque con Framework de Abstracción (AISuite) |
-| :--- | :--- | :--- |
-| **Proveedor de IA** | Específico de un proveedor (ej. Google Gemini). | **Multi-proveedor** (OpenAI, Google, Anthropic, etc.). |
-| **Flexibilidad** | Baja. Cambiar de proveedor requiere reescribir código. | **Alta**. Cambiar de proveedor se hace con configuración. |
-| **Facilidad de Uso** | Muy alta para el proveedor específico. | Alta, pero con una capa de abstracción que hay que aprender. |
-| **Caso de Uso Ideal**| Proyectos que estandarizan un solo proveedor de IA. | Proyectos que necesitan flexibilidad para cambiar o comparar modelos. |
-| **Dependencias** | Mínimas (solo la librería del proveedor). | Añade una dependencia extra (el framework `AISuite`). |
+- **Ventaja Principal**: **Flexibilidad total**. Cambia entre `openai:gpt-4o`, `google:gemini-2.0-flash`, `anthropic:claude-3-sonnet` con una línea de código.
+- **Arquitectura**: Lineal mejorada con funciones reutilizables
+- **Ideal para**: Proyectos que necesitan comparar modelos o mantener independencia del proveedor
+
+---
+
+### 📕 Nivel 3: `orquestador_base_datos.ipynb` (Avanzado - Orquestación Profesional)
+
+**Arquitectura Multi-Agente con LangGraph**
+
+Esta versión implementa **orquestación compleja** usando LangGraph para gestionar múltiples agentes con bucles de retroalimentación.
+
+- **Ventaja Principal**: **Robustez profesional**. Sistema que valida, corrige errores automáticamente y adapta el flujo según el contexto.
+- **Arquitectura**: Máquina de Estados Finitos (FSM) con 4 agentes orquestados:
+  1. **Agente Contextualización**: Valida la pregunta y el esquema (bucle de clarificación)
+  2. **Agente Generación SQL**: Crea el código SQL optimizado
+  3. **Agente Ejecución DB**: Ejecuta y valida resultados (bucle de corrección SQL)
+  4. **Agente Interpretación**: Convierte resultados a lenguaje natural
+- **Tecnologías**: LangGraph (orquestación) + AISuite (flexibilidad de modelos)
+- **Ideal para**: Sistemas de producción que requieren validación, corrección automática y manejo de casos complejos
+
+![Diagrama de Orquestación LangGraph](images/diagram_orquestac_langgraph.png)
+
+**🔄 Características Clave de la Orquestación:**
+- ✅ **Bucle de Clarificación**: Si la pregunta es ambigua, solicita más información
+- ✅ **Bucle de Corrección SQL**: Si el SQL falla, lo regenera automáticamente
+- ✅ **Bucle de Realimentación**: Si no hay resultados, revisa la pregunta
+- ✅ **Estado Compartido (Blackboard)**: Todos los agentes trabajan sobre el mismo contexto
+- ✅ **Transiciones Condicionales**: El flujo se adapta según los resultados
+
+## 🤔 ¿Qué Nivel Elegir? Comparación de Arquitecturas
+
+La elección depende de tu nivel de experiencia y los requisitos de tu proyecto. Sigue la ruta de aprendizaje progresivo:
+
+| Característica | 📘 Nivel 1 (Gemini API Key) | 📗 Nivel 2 (AISuite Multi-Proveedor) | 📕 Nivel 3 (LangGraph Orquestación) |
+| :--- | :--- | :--- | :--- |
+| **Complejidad** | ⭐ Básica | ⭐⭐ Intermedia | ⭐⭐⭐ Avanzada |
+| **Arquitectura** | Lineal (2 agentes secuenciales) | Lineal con funciones modulares | Máquina de Estados (4 agentes orquestados) |
+| **Proveedor IA** | Solo Google Gemini | Multi-proveedor (OpenAI, Google, Anthropic) | Multi-proveedor + Orquestación |
+| **Validación** | Manual | Manual | **Automática** (bucles de corrección) |
+| **Manejo de Errores** | Básico | Mejorado con Result Type Pattern | **Avanzado** (reintentos automáticos) |
+| **Flexibilidad** | Baja | Alta | **Muy Alta** (flujo adaptativo) |
+| **Caso de Uso** | Aprendizaje básico | Comparación de modelos | Sistemas de producción |
+| **Tecnologías** | `google-generativeai` | `aisuite` | `langgraph` + `aisuite` |
+| **Líneas de Código** | ~200 | ~350 | ~600 (pero más robusto) |
+
+### 🎓 Ruta de Aprendizaje Recomendada
+
+1. **Empieza con Nivel 1** → Entiende el concepto básico de agentes IA
+2. **Avanza a Nivel 2** → Aprende flexibilidad y comparación de modelos
+3. **Domina el Nivel 3** → Implementa sistemas profesionales con orquestación
+
+### 📚 Recursos Adicionales
+
+- **`buenaspracticas.ipynb`**: Guía completa de buenas prácticas de Python moderno (3.10+)
+  - Type hints, funciones limpias, manejo de errores, documentación
+  - Ejemplos ❌ MAL / ✅ BIEN
+  - Referenciado en todos los notebooks del proyecto
 
 
 ## 🧰 Requisitos
 
-- Python 3.8+
-- Acceso a una base de datos Oracle.
-- Claves API del proveedor de IA que desees utilizar (OpenAI, Google, etc.).
-- Jupyter Notebook.
+- **Python 3.10+** (requerido para sintaxis moderna de tipos: `str | None`, `TypeAlias`, `Literal`)
+  - ⚠️ Los notebooks incluyen validación automática de versión
+  - 💡 Se recomienda Python 3.10+ para aprovechar todas las características
+- Acceso a una base de datos Oracle
+- Claves API del proveedor de IA que desees utilizar (OpenAI, Google, Anthropic, etc.)
+- Jupyter Notebook o VS Code con extensión de Jupyter
 
 ## 📦 Instalación
 
